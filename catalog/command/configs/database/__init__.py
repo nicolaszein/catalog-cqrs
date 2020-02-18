@@ -1,3 +1,1 @@
-from .database import Database
-
-DATABASE = Database()
+from .mapping import DATABASE # noqa
