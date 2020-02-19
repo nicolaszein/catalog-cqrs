@@ -35,3 +35,23 @@ suppliers = Table(
 )
 
 mapper(Supplier, suppliers)
+
+categories = Table(
+    'categories',
+    metadata,
+    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4()),
+    Column('name', String(255), nullable=False),
+    Column(
+        'created_at',
+        DateTime(),
+        nullable=False,
+        default=datetime.datetime.utcnow
+    ),
+    Column(
+        'updated_at',
+        DateTime(),
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow
+    ),
+)
