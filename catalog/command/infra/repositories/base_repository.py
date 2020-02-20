@@ -14,8 +14,13 @@ class BaseRepository:
         return self.__save(entity)
 
     def __save(self, entity):
-        self.session.add(entity)
-        self.session.commit()
-        self.session.flush()
+        try:
+            self.session.add(entity)
+            self.session.commit()
+            self.session.flush()
 
-        return entity
+            return entity
+        except Exception as e:
+            self.session.rollback()
+
+            raise e
