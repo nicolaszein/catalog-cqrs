@@ -2,7 +2,8 @@ import datetime
 import uuid
 
 from sqlalchemy import (
-    Table, Column, String, DateTime, Text, ForeignKey, Integer, Float
+    Table, Column, String, DateTime, Text, ForeignKey, Integer, Float,
+    UniqueConstraint
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import mapper, relationship
@@ -62,6 +63,18 @@ categories = Table(
 
 mapper(Category, categories)
 
+product_categories = Table(
+    'product_categories',
+    metadata,
+    Column('product_id', UUID(as_uuid=True), ForeignKey('products.id')),
+    Column('category_id', UUID(as_uuid=True), ForeignKey('categories.id')),
+    UniqueConstraint(
+        'product_id',
+        'category_id',
+        name='_unique_product_category'
+    )
+)
+
 products = Table(
     'products',
     metadata,
@@ -88,5 +101,6 @@ products = Table(
 )
 
 mapper(Product, products, properties={
-    'supplier': relationship(Supplier)
+    'supplier': relationship(Supplier),
+    'categories': relationship(Category, secondary=product_categories)
 })
