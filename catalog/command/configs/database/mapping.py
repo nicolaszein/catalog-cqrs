@@ -21,7 +21,7 @@ metadata = DATABASE.metadata
 suppliers = Table(
     'suppliers',
     metadata,
-    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4()),
+    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
     Column('name', String(255), nullable=False),
     Column('phone', String(20), nullable=False),
     Column(
@@ -44,7 +44,7 @@ mapper(Supplier, suppliers)
 categories = Table(
     'categories',
     metadata,
-    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4()),
+    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
     Column('name', String(255), nullable=False),
     Column(
         'created_at',
@@ -78,7 +78,7 @@ product_categories = Table(
 products = Table(
     'products',
     metadata,
-    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4()),
+    Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
     Column('supplier_id', ForeignKey('suppliers.id'), nullable=False),
     Column('name', String(255), nullable=False),
     Column('description', Text(), nullable=True),

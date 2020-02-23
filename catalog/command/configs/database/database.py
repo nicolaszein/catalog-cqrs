@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 from catalog.settings import COMMAND_DATABASE_URL
 
@@ -7,7 +7,7 @@ from catalog.settings import COMMAND_DATABASE_URL
 metadata = MetaData()
 
 engine = create_engine(COMMAND_DATABASE_URL)
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 
 
 class Database:
@@ -22,7 +22,7 @@ class Database:
     def __init__(self):
         self.__metadata = MetaData()
         self.__engine = create_engine(COMMAND_DATABASE_URL)
-        self.__session = sessionmaker(bind=engine)()
+        self.__session = Session
 
     @property
     def metadata(self):
