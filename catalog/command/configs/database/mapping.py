@@ -22,7 +22,7 @@ suppliers = Table(
     'suppliers',
     metadata,
     Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
-    Column('name', String(255), nullable=False),
+    Column('name', String(255), nullable=False, unique=True),
     Column('phone', String(20), nullable=False),
     Column(
         'created_at',
@@ -45,7 +45,7 @@ categories = Table(
     'categories',
     metadata,
     Column('id', UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
-    Column('name', String(255), nullable=False),
+    Column('name', String(255), nullable=False, unique=True),
     Column(
         'created_at',
         DateTime(),
