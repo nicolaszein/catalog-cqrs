@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from catalog.command.configs.database import DATABASE as command_database # noqa
 
-from catalog.exceptions import ValidatorError
+from catalog.exceptions import ValidatorError, ObjectDoesNotExistError
 
 from catalog.web.api import app as api_app
 
@@ -27,6 +27,10 @@ class App:
         @app.errorhandler(ValidatorError)
         def handle_validator_error(e):
             return jsonify(errors=e.errors), 400
+
+        @app.errorhandler(ObjectDoesNotExistError)
+        def handle_object_does_not_exist_error(e):
+            return jsonify(errors={e.object_name: 'Does not exist'}), 404
 
     def __register_hooks(self, app):
         @app.teardown_appcontext
