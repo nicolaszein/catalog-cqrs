@@ -7,6 +7,14 @@ class BaseRepository:
     def __init__(self):
         self.session = DATABASE.session
 
+    def get(self, id):
+        try:
+            return self.session.query(self._entity).get(id)
+        except Exception as e:
+            self.session.rollback()
+
+            raise e
+
     def create(self, entity):
         return self.__save(entity)
 
