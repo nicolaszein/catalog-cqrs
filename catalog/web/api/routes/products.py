@@ -9,6 +9,8 @@ from catalog.command.application.use_cases.create_product import (
 from catalog.command.application.use_cases.commands.create_product_command \
     import CreateProductCommand
 
+from catalog.query.infra.repositories.products_repository import ProductsRepository
+
 
 @app.route(f'/products', methods=['POST'])
 def create_product():
@@ -18,3 +20,12 @@ def create_product():
     product = CreateProduct().execute(command)
 
     return jsonify(ProductSerializer().serialize(product)), 201
+
+
+@app.route(f'/products', methods=['GET'])
+def list_products():
+    filters = request.args.to_dict()
+
+    products = ProductsRepository().fetch_by_filters(**filters)
+
+    return jsonify([product.state for product in products])

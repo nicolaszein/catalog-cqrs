@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
-from catalog.command.configs.database import DATABASE as command_database # noqa
+from catalog.command.configs.database import DATABASE as command_database
+from catalog.query.configs.database import DATABASE as query_database
 
 from catalog.exceptions import ValidatorError, ObjectDoesNotExistError
 
@@ -36,6 +37,7 @@ class App:
         @app.teardown_appcontext
         def shutdown_session(exception=None):
             command_database.session.close()
+            query_database.session.close()
 
 
 app = App().start()
